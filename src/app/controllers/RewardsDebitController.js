@@ -62,11 +62,12 @@ export default new class RewardsDebitController {
                 res.status(400).json({ "error": "User not found" });
             } else { //se o histórico for encontrado
                 if (!masterDataDocumentResponse.data[clientId].orders[debitOrder]) { // se a ordem de debito não tiver sido utilizada
+                    let newPoints = +masterDataDocumentResponse.data[clientId].points - +debitValue;
                     let responseUpdate = await axios.patch(`https://${process.env.ACCOUNT_NAME}.${process.env.ENVIROMENT}.com/api/dataentities/${process.env.DATA_ENTITY_NAME}/documents/${process.env.MASTERDATA_DOCUMENT_ID}`,
                         {
                             [clientId]: {
                                 ...masterDataDocumentResponse.data[clientId],
-                                "points": +masterDataDocumentResponse.data[clientId].points - +debitValue,
+                                "points": newPoints,
                                 "orders": {
                                     ...masterDataDocumentResponse.data[clientId].orders,
                                     [debitOrder]: {
@@ -79,7 +80,7 @@ export default new class RewardsDebitController {
                         {
                             headers: { "X-VTEX-API-AppKey": process.env.X_VTEX_API_AppKey, "X-VTEX-API-AppToken": process.env.X_VTEX_API_AppToken }
                         });
-                    res.status(responseUpdate.status).json({ "Response": "Ok - User's Points Debited" });
+                    res.status(200).json({ "Points": newPoints });
                 }else{
                     res.status(400).json({ "Error": "The debit Order must be unique" });
                 }
