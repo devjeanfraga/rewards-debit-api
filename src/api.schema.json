@@ -1,0 +1,160 @@
+
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api Points - challenge vtexIo",
+    "description": "Debit Points API",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": " http://localhost:3000/rewards-debitApi/v1",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/points": {
+      "post": {
+        "description": "Debit Points",
+        "operationId": "debitPoints",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Enabled Hook Config",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HookConfig"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Set Points",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Points"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters, User not found, Order not found, Order already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid parameters",
+                  "code": "400",
+                  "error": 
+                    "Bad Request"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": ["User not Found"],
+                  "code": "404",
+                  "error": ["User Not Found"]
+                }
+              }
+            }
+          }
+
+          
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "debitValue": {
+        "type": "string",
+        "example": "-7000"
+      },
+      "debitOrder": {
+        "type": "string",
+        "example": "2022-07-17-4"
+      },
+      "clientId": {
+        "type": "string",
+        "example": "0f2ad6e9-35bc-489e-97cd-4b61991e5543"
+      },
+      "hookConfig": {
+        "type": "string",
+        "example": "ping"
+      },
+      "ReqBody": {
+        "type": "object",
+        "properties": {
+          "debitValue": {
+            "$ref": "#/components/schemas/debitValue"
+          },
+          "debitOrder": {
+            "$ref": "#/components/schemas/debitOrder"
+          },
+          "clientId": {
+            "$ref": "#/components/schemas/clientId"
+          },
+          "hookConfig": {
+            "$ref": "#/components/schemas/hookConfig"
+          }
+        }
+      },
+      "Points": {
+        "type": "object",
+        "properties": {
+          "Points": {
+            "type": "number",
+            "example": 9000
+          }
+        }  
+      },
+      "HookConfig": {
+        "type": "object",
+        "properties": {
+          "Config": {
+            "type": "string",
+            "example": "Successful"
+          }
+        }  
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
