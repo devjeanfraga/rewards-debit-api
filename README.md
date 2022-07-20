@@ -29,3 +29,5 @@ Principais tecnologias utilizadas no código.
 
 💻 [Node.js](https://nodejs.org/)
 🛠 [JavaScript](https://www.javascript.com/)
+🗄️ [Vtex-MasterData](https://developers.vtex.com/vtex-rest-api/reference/master-data-api-v2-overview)
+⚓[Vtex-Hook](https://developers.vtex.com/vtex-rest-api/docs/orders-feed)
