@@ -3,9 +3,10 @@ export default new class RewardsDebitController {
 
     async store(req, res) { //post debitar o número de pontos
         let { OrderId, State, hookConfig, debitValue, clientId, debitOrder } = req.body; // captura as variaveis número do pedido, estado do pedido e configuração
-        if (hookConfig) //se possuir a variavel configuração, significa que o request foi somente de configuração
-            return res.status(200).json({ "Config": "Successful" }); //retorna um status 200 para informar que a configuração foi bem sucedida
-
+        if (hookConfig) {
+          return res.status(200).json({ "Config": "Successful" })
+        } //se possuir a variavel configuração, significa que o request foi somente de configuração
+          //retorna um status 200 para informar que a configuração foi bem sucedida
         if ((!State) && (!(debitValue && clientId && debitOrder))) //verifica se a váriavel estado foi passada no body da requisição
             return res.status(400).json({ "error": "Bad Request" }); //envia um erro informando requisição inválida
         else if (State) { //verifica se possui estado
@@ -25,7 +26,7 @@ export default new class RewardsDebitController {
                         { headers: { "X-VTEX-API-AppKey": process.env.X_VTEX_API_AppKey, "X-VTEX-API-AppToken": process.env.X_VTEX_API_AppToken } });
 
                 if (!masterDataDocumentResponse.data[id_client]) { // se o usuário não tiver histórico de compra
-                    res.status(400).json({ "error": "User not found" });
+                    res.status(404).json({ "error": "User not found" });
                 } else { //se o histórico for encontrado
                     if (masterDataDocumentResponse.data[id_client].orders[OrderId]) { //verifica se o pedido se encontra no histórico do usuario
                         let responseUpdate = await axios.patch(`https://${process.env.ACCOUNT_NAME}.${process.env.ENVIROMENT}.com/api/dataentities/${process.env.DATA_ENTITY_NAME}/documents/${process.env.MASTERDATA_DOCUMENT_ID}`,
@@ -80,7 +81,7 @@ export default new class RewardsDebitController {
                         {
                             headers: { "X-VTEX-API-AppKey": process.env.X_VTEX_API_AppKey, "X-VTEX-API-AppToken": process.env.X_VTEX_API_AppToken }
                         });
-                    res.status(200).json({ "Points": newPoints });
+                    res.status(201).json({ "Points": newPoints });
                 }else{
                     res.status(400).json({ "Error": "The debit Order must be unique" });
                 }
