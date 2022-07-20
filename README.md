@@ -16,4 +16,7 @@
   Executa o app em modo desenvolvimento [http://localhost:3000](http://localhost:3000/)
 
 
-# [**Documentação**](**http://localhost:3000/rewards-debitApi/v1/docs**)
+# Documentação
+  Antes de acessar a documentação online certifique-se de que a instruções de **Como rodar o projeto** foram executadas. 
+   
+[http://localhost:3000/rewards-debitApi/v1/docs](http://localhost:3000/rewards-debitApi/v1/docs)
