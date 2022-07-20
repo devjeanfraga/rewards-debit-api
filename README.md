@@ -1,4 +1,4 @@
-#  **Chellenge VtexIo**
+#  **Challenge VtexIo**
 ## API  - Points  
 
 ## Como Rodar o Projeto ?
